@@ -1,6 +1,6 @@
 # Prismjs fold json
 
-A plugin for Prismjs add folding to JSON or JavaScript map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.1/test.html)
+A plugin for Prismjs add folding to JSON or JavaScript map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.2/test.html)
 
 ## How It Work
 
