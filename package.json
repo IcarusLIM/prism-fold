@@ -1,0 +1,26 @@
+{
+  "name": "prismjs-fold-json",
+  "version": "1.0.0",
+  "description": "plugin for prism to fold json/js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IcarusLIM/prism-fold.git"
+  },
+  "keywords": [
+    "prism",
+    "plugin",
+    "fold",
+    "json",
+    "js"
+  ],
+  "author": "IcarusLIM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IcarusLIM/prism-fold/issues"
+  },
+  "homepage": "https://github.com/IcarusLIM/prism-fold#readme"
+}

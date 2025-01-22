@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+code details[open]>summary:first-child::before {
+  transform: rotate(90deg);
+}
+
+code details[open]>summary>span.braces-start~span {
+  display: none;
+}
+
+code details {
+  display: inline;
+}
+
+
+code details:not([open])>summary>span.braces-start::after {
+  content: " ... ";
+}
+
+code summary {
+  display: inline;
+}
+
+
+code>* details summary:first-child::before {
+  position: absolute;
+  display: inline-flex;
+  margin-left: -0.5rem;
+  content: "▶";
+  font-style: normal;
+  transition: transform 100ms;
+  color: #999;
+}
