@@ -64,7 +64,6 @@
             return { tokenAppender, right }
         }
 
-        // Tag </detail> and </summery> always create newline, move last text token to outter, and remove a "\n" to make it right
         function dirtyRemoveExtraClrf(tokens) {
             const newTokens = []
             let needRemove = false
@@ -89,7 +88,11 @@
         }
         if (Array.isArray(env.tokens)) {
             try {
-                env.tokens = dirtyRemoveExtraClrf(nestTokens(env.tokens, 0).tokenAppender)
+                env.tokens = nestTokens(env.tokens, 0).tokenAppender
+                // For chrome: Tag </detail> and </summery> always create newline, move last text token to outter, and remove a "\n" to make it right
+                if ((typeof process !== "undefined" && process.env.PRISM_IN_CHROME_LIKE === "true") || (typeof window !== "undefined" && window.navigator.userAgent.includes("Chrome"))) {
+                    env.tokens = dirtyRemoveExtraClrf(env.tokens)
+                }
             } catch (e) { console.log(e) }
         }
     }

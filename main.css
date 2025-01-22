@@ -21,6 +21,9 @@ code summary {
   display: inline;
 }
 
+details summary::-webkit-details-marker {
+  display:none;
+}
 
 code>* details summary:first-child::before {
   position: absolute;
