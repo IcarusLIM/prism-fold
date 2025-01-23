@@ -110,11 +110,11 @@
                 let dirtyStg = (typeof process !== "undefined" && process.env.PRISM_IN_CHROME_LIKE) || (typeof window !== "undefined" && window.PRISM_IN_CHROME_LIKE) || "auto"
                 if (dirtyStg === "auto") {
                     dirtyStg = "old"
+                    let isChrome = false
+                    let isChromium = false
+                    let version = 0
                     if (window.navigator.userAgentData) {
                         let vendors = window.navigator.userAgentData.brands;
-                        let isChrome = false
-                        let isChromium = false
-                        let version = 0
                         for (const vendor of vendors) {
                             if (vendor.brand === "Google Chrome") {
                                 isChrome = true
@@ -124,9 +124,15 @@
                                 version = vendor.version
                             }
                         }
-                        if ((isChrome && version > 128) || (isChromium && !isChrome && version >= 128)) {
-                            dirtyStg = "new"
+                    } else if (window.navigator.userAgent) {
+                        const matched = window.navigator.userAgent.match(/Chrome\/(\d+).\d+.\d+.\d+/)
+                        if (matched) {
+                            isChrome = true
+                            version = Number(matched[1])
                         }
+                    }
+                    if ((isChrome && version > 128) || (isChromium && !isChrome && version >= 128)) {
+                        dirtyStg = "new"
                     }
                 }
                 if (dirtyStg === "new") {
