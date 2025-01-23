@@ -63,7 +63,7 @@
             }
             return { tokenAppender, right }
         }
-
+        // For chromium>=128 : Tag </detail> and </summery> always create newline, move last text token to outter, and remove a "\n" to make it right
         function dirtyRemoveExtraClrf(tokens) {
             const newTokens = []
             let needRemove = false
@@ -86,12 +86,43 @@
             }
             return newTokens
         }
+
+        // For chromium<128 or safari/firefox : Tag </detail> always add indent same with itself, remove it !!!
+        function dirtyRemoveExtraSpace(tokens, parentSpace) {
+            const newTokens = []
+            let curSpace = 0
+            for (const token of tokens) {
+                let newToken = token
+                if (typeof token === "string" && token.includes("\n")) {
+                    curSpace = token.split("").filter(i => i === " ").length
+                    newToken = token.replace(" ".repeat(parentSpace), "")
+                } else if (token instanceof Prism.Token && token.type === "tag-details") {
+                    newToken = new Prism.Token(token.type, dirtyRemoveExtraSpace(token.content, curSpace), token.alias)
+                }
+                newTokens.push(newToken)
+            }
+            return newTokens
+        }
+
         if (Array.isArray(env.tokens)) {
             try {
                 env.tokens = nestTokens(env.tokens, 0).tokenAppender
-                // For chrome: Tag </detail> and </summery> always create newline, move last text token to outter, and remove a "\n" to make it right
-                if ((typeof process !== "undefined" && process.env.PRISM_IN_CHROME_LIKE === "true") || (typeof window !== "undefined" && window.navigator.userAgent.includes("Chrome"))) {
+                let dirtyStg = (typeof process !== "undefined" && process.env.PRISM_IN_CHROME_LIKE) || (typeof window !== "undefined" && window.PRISM_IN_CHROME_LIKE) || "auto"
+                if (dirtyStg === "auto") {
+                    dirtyStg = "old"
+                    if (window.navigator.userAgentData) {
+                        let vendors = window.navigator.userAgentData.brands;
+                        for (const vendor of vendors) {
+                            if ((vendor.brand === "Google Chrome" && vendor.version > 128) || (vendor.brand === "Chromium" && vendor.version >= 128)) {
+                                dirtyStg = "new"
+                            }
+                        }
+                    }
+                }
+                if (dirtyStg === "new") {
                     env.tokens = dirtyRemoveExtraClrf(env.tokens)
+                } else if (dirtyStg === "old") {
+                    env.tokens = dirtyRemoveExtraSpace(env.tokens, 0, 0)
                 }
             } catch (e) { console.log(e) }
         }
