@@ -1,6 +1,6 @@
 # Prismjs fold json
 
-A plugin for Prismjs add folding to JSON or JavaScript map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.4/test.html)
+A plugin for Prismjs add folding to JSON or JavaScript map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.5/test.html)
 
 ## How It Work
 
@@ -66,6 +66,6 @@ import 'prismjs-fold-json/main.css'
 
 The `details` tag behaves differently in different browsers:
 - in chromium>=128: new line created 
-- others: extract space added for children nodes
+- others: extra spaces added to every children lines
 
-This repository should be compatible with these behaves [code](https://github.com/IcarusLIM/prism-fold/blob/main/index.js#L110-L126). If not, try to set environment variable PRISM_IN_CHROME_LIKE (auto/new/old/none)
+This repository should be compatible with these behaves [code](https://github.com/IcarusLIM/prism-fold/blob/main/index.js#L110-L136). If not, try to set environment variable PRISM_IN_CHROME_LIKE (auto/new/old/none)

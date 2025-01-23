@@ -112,17 +112,27 @@
                     dirtyStg = "old"
                     if (window.navigator.userAgentData) {
                         let vendors = window.navigator.userAgentData.brands;
+                        let isChrome = false
+                        let isChromium = false
+                        let version = 0
                         for (const vendor of vendors) {
-                            if ((vendor.brand === "Google Chrome" && vendor.version > 128) || (vendor.brand === "Chromium" && vendor.version >= 128)) {
-                                dirtyStg = "new"
+                            if (vendor.brand === "Google Chrome") {
+                                isChrome = true
+                                version = vendor.version
+                            } else if (vendor.brand === "Chromium") {
+                                isChromium = true
+                                version = vendor.version
                             }
+                        }
+                        if ((isChrome && version > 128) || (isChromium && !isChrome && version >= 128)) {
+                            dirtyStg = "new"
                         }
                     }
                 }
                 if (dirtyStg === "new") {
                     env.tokens = dirtyRemoveExtraClrf(env.tokens)
                 } else if (dirtyStg === "old") {
-                    env.tokens = dirtyRemoveExtraSpace(env.tokens, 0, 0)
+                    env.tokens = dirtyRemoveExtraSpace(env.tokens, 0)
                 }
             } catch (e) { console.log(e) }
         }
