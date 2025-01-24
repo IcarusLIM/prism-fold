@@ -1,14 +1,15 @@
 # Prismjs fold json
 
-A plugin for Prismjs add folding to JSON or JavaScript map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.7/test.html)
+A plugin for Prismjs add folding to JSON map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.7/test.html)  
+This algorithm should work for any C-like language. `JSON/JavaScript/Java` is accepted by defualt, you can set environment variable PRISM_FOLD_HOOK_LANGUAGES to add more
 
 ## How It Work
 
 This plugin parse tokens from Prism and wraps {} & [] pairs in a `<details>` tag to provide code folding
 
 It add "after-tokenize" and "wrap" handlers to Prism hooks  
-The after-tokenize handler identifies token with `type=="punctuation"` and `content=="{" || content=="["`, turns flatten token list to nested tokens corresponding to folding  
-The wrap hander set details/summery tags before final stringify  
+- after-tokenize handler: identifies token with `type=="punctuation"` and `content=="{" || content=="["`, turns flatten token list to nested tokens corresponding to folding  
+- wrap handler: set details/summery tags before final stringify  
 
 ### Differences from others
 
@@ -68,4 +69,4 @@ The `details` tag behaves differently in different browsers:
 - in chromium>=128: new line created 
 - others: extra spaces added to every children lines
 
-This repository should be compatible with these behaves [code](https://github.com/IcarusLIM/prism-fold/blob/main/index.js#L110-L143). If not, try to set environment variable PRISM_IN_CHROME_LIKE (auto/new/old/none)
+This repository should be compatible with these behaviors [code](https://github.com/IcarusLIM/prism-fold/blob/main/index.js#L128-L160). If not, try to set environment variable PRISM_IN_CHROME_LIKE (auto/new/old/none)
