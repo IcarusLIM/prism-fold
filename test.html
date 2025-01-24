@@ -3,20 +3,14 @@
 
 <head>
     <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-coy.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/prismjs-fold-json@1.0.6/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/prismjs-fold-json@1.0.7/main.css" />
     <!-- <link rel="stylesheet" href="main.css" /> -->
 </head>
 
 <body>
-    <pre>
-        <code class="language-json">{
+<pre><code class="language-json">{
     "name": "prismjs-fold-json",
     "version": "1.0.0",
-    "description": "plugin for prism to fold json/js",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/IcarusLIM/prism-fold.git"
@@ -24,21 +18,42 @@
     "keywords": [
         "prism",
         "plugin",
-        "fold",
-        "json",
-        "js"
     ],
-    "author": "IcarusLIM",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/IcarusLIM/prism-fold/issues"
-    },
-    "homepage": "https://github.com/IcarusLIM/prism-fold#readme"
-}</code>
-    </pre>
+}</code></pre>
+
+<pre><code class="language-javascript">function f() {
+    function innerF1() {
+        return "Hello F1"
+    }
+    const innerF2 = () => {
+        return [
+            "Hello",
+            "F2"
+        ]
+    }
+    console.log(innerF1())
+    console.log(innerF2())
+}
+
+f()</code></pre>
+
+<pre><code class="language-java">package com.xxx.xxx.xxx;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+}</code></pre>
     <script src="https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js"></script>
     <script src="https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script src="https://unpkg.com/prismjs-fold-json@1.0.6/index.js"></script>
+    <script>PRISM_FOLD_HOOK_LANGUAGES="json,javascript,java";PRISM_IN_CHROME_LIKE="auto"</script>
+    <script src="https://unpkg.com/prismjs-fold-json@1.0.7/index.js"></script>
     <!-- <script src="index.js"></script> -->
 </body>
 

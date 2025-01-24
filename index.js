@@ -3,6 +3,10 @@
         return;
     }
 
+    function getEnv(k) {
+        return (typeof process !== "undefined" && process.env[k]) || (typeof window !== "undefined" && window[k])
+    }
+
     function joinAlias(cur, i) {
         if (!cur) {
             return i
@@ -14,17 +18,31 @@
         throw new Error("unknown alias type: " + cur)
     }
 
+    function isBracesOpen(tokens, i) {
+        const token = tokens[i]
+        const nextToken = tokens[i + 1]
+        return token.type === "punctuation" && (token.content === "{" || token.content === "[") && typeof nextToken === "string" && nextToken.includes("\n")
+    }
+
+    function isBracesClose(tokens, i) {
+        const token = tokens[i]
+        const formerToken = tokens[i - 1]
+        return token.type === "punctuation" && (token.content === "}" || token.content === "]") && typeof formerToken === "string" && formerToken.includes("\n")
+    }
+
+
     function addFolds(env) {
-        if (env.language !== 'json')
+        const hookLanguages = (getEnv("PRISM_FOLD_HOOK_LANGUAGES") || "json,javascript,java").split(",")
+        if (!hookLanguages.includes(env.language))
             return
         function nestTokens(tokens, left) {
             const tokenAppender = []
             let right = left
             while (right < tokens.length) {
                 const token = tokens[right]
-                if (token.type === "punctuation" && (token.content === "}" || token.content === "]")) {
+                if (isBracesClose(tokens, right)) {
                     break
-                } else if (token.type === "punctuation" && (token.content === "{" || token.content === "[")) {
+                } else if (isBracesOpen(tokens, right)) {
                     const endPtn = token.content === "{" ? "}" : "]"
                     const child = nestTokens(tokens, right + 1)
                     if (tokens[child.right].content === endPtn) {
@@ -107,7 +125,7 @@
         if (Array.isArray(env.tokens)) {
             try {
                 env.tokens = nestTokens(env.tokens, 0).tokenAppender
-                let dirtyStg = (typeof process !== "undefined" && process.env.PRISM_IN_CHROME_LIKE) || (typeof window !== "undefined" && window.PRISM_IN_CHROME_LIKE) || "auto"
+                let dirtyStg = getEnv("PRISM_IN_CHROME_LIKE") || "auto"
                 if (dirtyStg === "auto") {
                     dirtyStg = "old"
                     let isChrome = false
