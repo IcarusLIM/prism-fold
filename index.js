@@ -54,8 +54,8 @@
                             right++;
                         }
                         if (child.tokenAppender.length > 0) {
-                            for (let i = tokenAppender.length - 1; i >= 0; i--) {
-                                if (typeof tokenAppender[i] === "string" && tokenAppender[i].includes("\n")) {
+                            for (let i = tokenAppender.length - 1; i >= -1; i--) {
+                                if (i < 0 || (typeof tokenAppender[i] === "string" && tokenAppender[i].includes("\n"))) {
                                     const backN = tokenAppender.length - (i + 1)
                                     for (let j = 0; j < backN; j++) {
                                         headTokens.unshift(tokenAppender.pop())

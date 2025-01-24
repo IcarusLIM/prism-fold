@@ -1,6 +1,6 @@
 # Prismjs fold json
 
-A plugin for Prismjs add folding to JSON map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.7/test.html)  
+A plugin for Prismjs add folding to JSON map and list [Demo](https://unpkg.com/prismjs-fold-json@1.0.8/test.html)  
 This algorithm should work for any C-like language. `JSON/JavaScript/Java` is accepted by defualt, you can set environment variable PRISM_FOLD_HOOK_LANGUAGES to add more
 
 ## How It Work
